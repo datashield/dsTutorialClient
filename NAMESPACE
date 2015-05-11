@@ -1,0 +1,4 @@
+export(ds.length)
+export(ds.log)
+export(ds.mean)
+export(ds.replaceNA)

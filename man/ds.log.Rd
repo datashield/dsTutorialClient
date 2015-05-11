@@ -1,0 +1,64 @@
+\name{ds.log}
+\alias{ds.log}
+\title{Computes logarithms, by default natural logarithms}
+\usage{
+ds.log(x = NULL, base = exp(1), newobj = NULL, checks = FALSE,
+  datasources = NULL)
+}
+\arguments{
+  \item{x}{a vector.}
+
+  \item{base}{a numrical, the base with respect to which
+  logarithms are computed.}
+
+  \item{newobj}{the name of the new variable. If this
+  argument is set to NULL, the name of the new variable is
+  the name of the input variable with the suffixe '_log'
+  (e.g. 'LAB_TSC_log', if input variable's name is
+  'LAB_TSC')}
+
+  \item{checks}{a boolean, if TRUE (default) checks that
+  verify elements on the server side such checks lengthen
+  the run-time so the default is FALSE and one can switch
+  these checks on (set to TRUE) when faced with some
+  error(s).}
+
+  \item{datasources}{a list of opal object(s) obtained
+  after login in to opal servers; these objects hold also
+  the data assign to R, as \code{dataframe}, from opal
+  datasources.}
+}
+\value{
+nothing is returned to the client, the new object is stored
+on the server side.
+}
+\description{
+This function is similar to R function \code{log}.
+}
+\details{
+
+
+this is simply a wrapper for the server side function.
+}
+\examples{
+{
+
+  # load that contains the login details
+  data(logindata)
+
+  # login and assign specific variable(s)
+  myvar <- list("LAB_TSC")
+  opals <- datashield.login(logins=logindata,assign=TRUE,variables=myvar)
+
+  # Compute natural logarithm of LAB_TSC
+  ds.log(x='D$LAB_TSC')
+
+  # clear the Datashield R sessions and logout
+  datashield.logout(opals)
+
+}
+}
+\author{
+Gaye, A.; Isaeva, J.
+}
+

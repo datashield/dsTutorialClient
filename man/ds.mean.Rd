@@ -1,0 +1,67 @@
+\name{ds.mean}
+\alias{ds.mean}
+\title{Computes the statistical mean of a given vector}
+\usage{
+ds.mean(x = NULL, type = "combine", checks = FALSE, datasources = NULL)
+}
+\arguments{
+  \item{x}{a character, the name of a numerical vector}
+
+  \item{type}{a character which represents the type of
+  analysis to carry out. If \code{type} is set to
+  'combine', a global mean is calculated if \code{type} is
+  set to 'split', the mean is calculated separately for
+  each study.}
+
+  \item{checks}{a boolean, if TRUE (default) checks that
+  verify elements on the server side such checks lengthen
+  the run-time so the default is FALSE and one can switch
+  these checks on (set to TRUE) when faced with some
+  error(s).}
+
+  \item{datasources}{a list of opal object(s) obtained
+  after login in to opal servers; these objects hold also
+  the data assign to R, as \code{data frame}, from opal
+  datasources.}
+}
+\value{
+a numeric
+}
+\description{
+This function is similar to the R function \code{mean}.
+}
+\details{
+
+
+It is a wrapper for the server side function.
+}
+\examples{
+{
+
+  # load that contains the login details
+  data(logindata)
+
+  # login and assign specific variable(s)
+  myvar <- list('LAB_TSC')
+  opals <- datashield.login(logins=logindata,assign=TRUE,variables=myvar)
+
+  # Example 1: compute the pooled statistical mean of the variable 'LAB_TSC' - default behaviour
+  ds.mean(x='D$LAB_TSC')
+
+  # Example 2: compute the statistical mean of each study separately
+  ds.mean(x='D$LAB_TSC', type='split')
+
+  # clear the Datashield R sessions and logout
+  datashield.logout(opals)
+
+}
+}
+\author{
+Gaye A., Isaeva I.
+}
+\seealso{
+\code{ds.quantileMean} to compute quantiles.
+
+\code{ds.summary} to generate the summary of a variable.
+}
+

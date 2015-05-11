@@ -1,0 +1,83 @@
+\name{ds.replaceNA}
+\alias{ds.replaceNA}
+\title{Replaces the missing values in a vector}
+\usage{
+ds.replaceNA(x = NULL, forNA = NULL, newobj = NULL, checks = FALSE,
+  datasources = NULL)
+}
+\arguments{
+  \item{x}{a character, the name of the vector to process.}
+
+  \item{forNA}{a list which contains the replacement
+  value(s), a vector one or more values for each study. The
+  length of the list must be equal to the number of servers
+  the analyst is connected to.}
+
+  \item{newobj}{a character, the name of the new vector in
+  which missing values have been replaced. If no name is
+  specified the default name is the name of the original
+  vector followed by the suffix '.noNA' e.g. 'LAB_HDL.noNA'
+  if the name of the vector is 'LAB_HDL'.}
+
+  \item{checks}{a boolean, if TRUE (default) checks that
+  verify elements on the server side such checks lengthen
+  the run-time so the default is FALSE and one can switch
+  these checks on (set to TRUE) when faced with some
+  error(s).}
+
+  \item{datasources}{a list of opal object(s) obtained
+  after login in to opal servers; these objects hold also
+  the data assign to R, as \code{dataframe}, from opal
+  datasources.}
+}
+\value{
+a new vector or table structure with the same class is
+stored on the server site.
+}
+\description{
+This function identifies missing values and replaces them
+by a value or values specified by the analyst.
+}
+\details{
+
+
+This function is used when the analyst prefer or requires
+complete vectors. It is then possible the specify one value
+for each missing value by first returning the number of
+missing values using the function \code{ds.numNA} but in
+most cases it might be more sensible to replace all missing
+values by one specific value e.g. replace all missing
+values in a vector by the mean or median value. Once the
+missing values have been replaced a new vector is created.
+NOTE: If the vector is within a table structure such as a
+data frame the new vector is appended to table structure so
+that the table hold hold both the vector with and without
+missing values. The latter is, by default, given a
+different that indicates its 'completeness'.
+}
+\examples{
+{
+
+  # load that contains the login details
+  data(logindata)
+
+  # login and assign all the stored variables.
+  opals <- datashield.login(logins=logindata,assign=TRUE)
+
+  # Replace missing values in variable 'LAB_HDL' by the mean value in each study
+  # first let us get the mean value for 'LAB_HDL' in each study
+  ds.mean(x='D$LAB_HDL', type='split')
+
+  # replace missing values in the variable 'LAB_HDL' in dataf frame 'D' by
+  # the mean value and name the new variable 'HDL.noNA'.
+  ds.replaceNA(x='D$LAB_HDL', forNA=list(1.569416, 1.556648), newobj='HDL.noNA')
+
+  # clear the Datashield R sessions and logout
+  datashield.logout(opals)
+
+}
+}
+\author{
+Gaye, A.
+}
+

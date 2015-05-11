@@ -1,0 +1,9 @@
+Package: dsTutorialClient
+Maintainer: <datashield@obiba.org>
+Author: <datashield@obiba.org>
+Version: 1.0.0
+License: GPL-3
+Title: DataSHIELD client side functions for my first package
+Description: DataSHIELD tutorial functions for the client site
+Depends:
+    opal
